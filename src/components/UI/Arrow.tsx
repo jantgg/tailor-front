@@ -12,9 +12,9 @@ const Arrow: React.FC<ArrowProps> = ({ direction }) => {
         return "-90";
       case "down":
         return "90";
-      case "left":
-        return "180";
       case "right":
+        return "180";
+      case "left":
       default:
         return "0";
     }
@@ -22,24 +22,32 @@ const Arrow: React.FC<ArrowProps> = ({ direction }) => {
 
   return (
     <div
-      className={`flex items-center transition-transform duration-300 ease-in-out`}
+      className={`flex items-center justify-center transition-transform duration-300 ease-in-out`}
       style={{ transform: `rotate(${getRotation()}deg)` }}
     >
       {/* Flecha */}
       <svg
-        width="20"
-        height="2"
-        viewBox="0 0 20 2"
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M1.5 1H18.33"
-          stroke="#292D32"
-          strokeWidth="1.5"
-          strokeMiterlimit="10"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          d="M11.165 21.0815L4.08337 13.9999L11.165 6.91821"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M23.9167 14L4.28175 14"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         />
       </svg>
     </div>

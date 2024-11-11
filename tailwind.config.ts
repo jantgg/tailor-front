@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'tailor-blue': '#4A0FFF', // Color personalizado de tailor
+        'tailor-blue': '#264BEB', // Color personalizado de tailor
       },
     },
   },

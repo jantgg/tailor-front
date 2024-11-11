@@ -14,7 +14,7 @@ const WelcomeCard: React.FC = () => {
       <Button
         text="Entrar"
         href="/login"
-        additionalClasses="text-gray-800 font-semibold"
+        additionalClasses="text-gray-800 font-semibold rounded-xl"
       />
     </div>
   );

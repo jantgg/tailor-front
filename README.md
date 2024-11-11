@@ -87,3 +87,9 @@ my-next-app/
 ├── .env.local                             # Variables de entorno para la API Key de Google Maps y Cloudinary.
 └── README.md                              # Instrucciones sobre cómo instalar, configurar y ejecutar la aplicación.
 ```
+
+A mejorar:
+manejo de errores entre backy  front mas robusto
+mas fragmentacion en componentes en los formularios
+paginacion con api en los comentarios de los restaurantes
+json las validaciones en zod

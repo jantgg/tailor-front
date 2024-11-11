@@ -7,8 +7,9 @@ interface AuthState {
   user: User | null;
   token: string | null;
   loading: boolean;
-  error: string | null;
+  error: { message: string; status: number } | null;
 }
+
 
 const initialState: AuthState = {
   user: null,
@@ -26,9 +27,9 @@ export const registerUser = createAsyncThunk(
       return response;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue({ message: error.message, status: 500 });
       } else {
-        return rejectWithValue('Error desconocido');
+        return rejectWithValue({ message: 'Error desconocido', status: 500 });
       }
     }
   }
@@ -39,18 +40,16 @@ export const loginUser = createAsyncThunk<{ user: User; token: string }, { usern
   async ({ username, password }, { rejectWithValue }) => {
     try {
       const response = await login(username, password);
-      return response as { user: User; token: string };
+      return response;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        return rejectWithValue(error.message); 
+        return rejectWithValue({ message: error.message, status: 500 });
       } else {
-        return rejectWithValue('Error desconocido');
+        return rejectWithValue({ message: 'Error desconocido', status: 500 });
       }
     }
   }
 );
-
-
 
 const authSlice = createSlice({
   name: 'auth',
@@ -70,7 +69,15 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = (action.payload as string) || action.error.message || 'Error en el registro';
+        const errorPayload = action.payload as { message: string; status: number };
+        state.error = errorPayload || { message: 'Error en el registro', status: 500 };
+        console.log('Register failed with error:', action.payload);
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.error = null;
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -84,7 +91,8 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = (action.payload as string) || action.error.message || 'Error en el inicio de sesión';
+        const errorPayload = action.payload as { message: string; status: number };
+        state.error = errorPayload || { message: 'Error en el inicio de sesión', status: 500 };
         console.log('Login failed with error:', action.payload);
       });
   },
