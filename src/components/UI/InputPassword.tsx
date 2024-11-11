@@ -17,7 +17,7 @@ const InputPassword: React.FC<InputPasswordProps> = ({ label, placeholder = '', 
     setPasswordVisible((prevState) => !prevState);
   };
 
-  const baseClasses = 'w-full ps-6 py-2 border border-white rounded-full bg-transparent text-3xl focus:outline-none focus:ring-2 focus:ring-tailor-blue';
+  const baseClasses = 'w-full ps-6 py-2 max-w-[600px] border border-white rounded-full bg-transparent text-3xl focus:outline-none focus:ring-2 focus:ring-tailor-blue';
   const classes = `${baseClasses} ${additionalClasses}`;
 
   return (

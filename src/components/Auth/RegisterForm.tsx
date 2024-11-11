@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { z } from "zod";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
 import { registerUser } from "../../redux/slices/authSlice";
 import Input from "../UI/Input";
 import InputPassword from "../UI/InputPassword";
@@ -12,6 +12,7 @@ import Arrow from "../UI/Arrow";
 const RegisterForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -20,12 +21,11 @@ const RegisterForm: React.FC = () => {
     password: "",
   });
   const [errors, setErrors] = useState<{
-    email?: string;
-    username?: string;
-    password?: string;
+    email?: string[];
+    username?: string[];
+    password?: string[];
   }>({});
 
-  // Validación paso 1
   const stepOneSchema = z.object({
     email: z
       .string()
@@ -38,7 +38,6 @@ const RegisterForm: React.FC = () => {
       .regex(/^[a-zA-Z0-9_]+$/, "El nombre de usuario solo puede contener letras, números y guiones bajos"),
   });
 
-  // Validación paso 2
   const stepTwoSchema = z.object({
     password: z
       .string()
@@ -94,7 +93,14 @@ const RegisterForm: React.FC = () => {
             name="email"
             additionalClasses="text-white"
           />
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
+          {errors.email && (
+            <ul className="text-red-500">
+              {errors.email.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          )}
+
           <Input
             label="Nombre de usuario"
             placeholder="Añade tu nombre"
@@ -103,7 +109,13 @@ const RegisterForm: React.FC = () => {
             name="username"
             additionalClasses="text-white"
           />
-          {errors.username && <p className="text-red-500">{errors.username}</p>}
+          {errors.username && (
+            <ul className="text-red-500">
+              {errors.username.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          )}
 
           <div className="flex justify-between">
             <Button
@@ -111,7 +123,7 @@ const RegisterForm: React.FC = () => {
               href="/login"
               additionalClasses="text-white rounded-3xl px-10 py-4 mt-4 md:mt-6 max-w-[200px]"
             >
-                <Arrow direction="left" />
+              <Arrow direction="left" />
             </Button>
             <Button
               text="Siguiente"
@@ -132,7 +144,13 @@ const RegisterForm: React.FC = () => {
             name="password"
             additionalClasses="text-white"
           />
-          {errors.password && <p className="text-red-500">{errors.password}</p>}
+          {errors.password && (
+            <ul className="text-red-500">
+              {errors.password.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          )}
 
           <div className="flex justify-between">
             <Button
@@ -144,6 +162,7 @@ const RegisterForm: React.FC = () => {
               text="Finalizar"
               onClick={handleSubmitStepTwo}
               additionalClasses="text-white rounded-3xl px-10 py-4 mt-4 md:mt-6 max-w-[200px]"
+              loading={loading}
             />
           </div>
         </>
