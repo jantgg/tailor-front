@@ -1,13 +1,13 @@
 // src/redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
-import commentsReducer from './slices/commentsSlice';
+import reviewsReducer from './slices/reviewsSlice';
 import restaurantsReducer from './slices/restaurantsSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    comments: commentsReducer,
+    reviews: reviewsReducer,
     restaurants: restaurantsReducer,
   },
 });
