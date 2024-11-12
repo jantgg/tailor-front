@@ -22,7 +22,13 @@ export interface Restaurant {
   operating_hours: OperatingHours;
   createdAt: Date;
   updatedAt: Date;
-  reviews: Review[];       // Datos completos de las reseñas
-  favorites: Favorite[];   // Datos completos de los favoritos
+  reviews: Review[];
+  favorites: Favorite[];
   averageRating: number;
+}
+
+export interface RestaurantData extends Record<string, unknown> {
+  name: string;
+  address: string;
+  image: string;
 }

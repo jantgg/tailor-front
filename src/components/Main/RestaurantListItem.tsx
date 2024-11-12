@@ -55,7 +55,9 @@ const RestaurantListItem: React.FC<RestaurantListItemProps> = ({ restaurant, cla
 
         <div className="mt-1 grid grid-cols-1 md:grid-cols-2 gap-x-2">
           <StarRating rating={restaurant.averageRating} maxRating={5} />
-          <span className="text-gray-500">({restaurant.reviews.length} comentarios)</span>
+          <span className="text-gray-500">
+            ({restaurant.reviews ? restaurant.reviews.length : 0} comentarios)
+          </span>
         </div>
       </div>
     </div>

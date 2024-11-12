@@ -8,20 +8,19 @@ import LogoName from './LogoName';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store'; 
 import { logout } from '../../redux/slices/authSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const Navbar: FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false); // Estado para verificar si el componente está montado
-  const [userName, setUserName] = useState<string | null>(null); // Estado para el nombre de usuario
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
   useEffect(() => {
-    setIsMounted(true); // Establece que el componente está montado en el cliente
-    // Aquí podrías cargar el nombre de usuario desde el estado de Redux o localStorage si es necesario
-    const storedUserName = "Nombre usuario"; // Aquí puedes obtener el nombre real del usuario desde el estado global o localStorage
-    setUserName(storedUserName);
+    setIsMounted(true);
   }, []);
 
   const toggleDropdown = () => {
@@ -31,10 +30,15 @@ const Navbar: FC = () => {
   const handleLogout = () => {
     dispatch(logout());
     router.push('/');
+    setDropdownOpen(false); // Cerrar el dropdown después de cerrar sesión
     console.log('Cerrando sesión y redirigiendo a la raíz...');
   };
 
-  if (!isMounted) return null; // Evita el renderizado en el servidor
+  const closeDropdown = () => {
+    setDropdownOpen(false);
+  };
+
+  if (!isMounted) return null;
 
   return (
     <nav className="fixed z-30 w-full p-4 px-6 flex justify-between items-center">
@@ -45,7 +49,7 @@ const Navbar: FC = () => {
       {/* Menú de Usuario */}
       <div className="relative">
         <div className="flex items-center space-x-2 cursor-pointer" onClick={toggleDropdown}>
-          <span className="text-xl">{userName}</span>
+          <span className="text-xl capitalize">{user?.username}</span>
           <Arrow direction={dropdownOpen ? 'down' : 'up'} color="black" className='h-5 w-5'/>
         </div>
 
@@ -54,12 +58,12 @@ const Navbar: FC = () => {
           <div className="absolute z-20 right-0 mt-2 w-48 bg-tailor-blue text-white rounded-lg shadow-lg">
             <ul className="p-2">
               <li className="py-1 px-2 hover:bg-blue-600 rounded">
-                <Link href="/panel">
+                <Link href="/panel" onClick={closeDropdown}>
                   Panel de control
                 </Link>
               </li>
               <li className="py-1 px-2 hover:bg-blue-600 rounded">
-                <Link href="/add-restaurant">
+                <Link href="/restaurants/create" onClick={closeDropdown}>
                   Añadir restaurante
                 </Link>
               </li>

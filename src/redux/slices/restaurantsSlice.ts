@@ -1,7 +1,7 @@
 // src/slices/restaurantsSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { restaurantRequest } from '../../api/restaurantsAPI';
-import { Restaurant } from '../../types/Restaurant';
+import { Restaurant, RestaurantData } from '../../types/Restaurant';
 
 interface RestaurantsState {
   restaurants: Restaurant[];
@@ -9,6 +9,7 @@ interface RestaurantsState {
   hoveredRestaurant: Restaurant | null;
   loading: boolean;
   error: string | null;
+  formStatus: 'idle' | 'success' | 'error';
 }
 
 const initialState: RestaurantsState = {
@@ -17,7 +18,9 @@ const initialState: RestaurantsState = {
   hoveredRestaurant: null,
   loading: false,
   error: null,
+  formStatus: 'idle',
 };
+
 
 
 const fetchRestaurants = createAsyncThunk(
@@ -49,9 +52,9 @@ const fetchRestaurant = createAsyncThunk(
 
 const createRestaurant = createAsyncThunk(
   'restaurants/createRestaurant',
-  async ({ restaurantData, token }: { restaurantData: Record<string, unknown>; token: string }, { rejectWithValue }) => {
+  async ({ restaurantData, token }: { restaurantData: RestaurantData; token: string }, { rejectWithValue }) => {
     try {
-      const response = await restaurantRequest({ method: 'POST', data: restaurantData, token });
+      const response = await restaurantRequest({ method: 'POST', data: restaurantData as Record<string, unknown>, token });
       return response as Restaurant;
     } catch (error) {
       console.error('Error al crear el restaurante:', error);
@@ -59,6 +62,7 @@ const createRestaurant = createAsyncThunk(
     }
   }
 );
+
 
 const updateRestaurant = createAsyncThunk(
   'restaurants/updateRestaurant',
@@ -93,6 +97,10 @@ const restaurantsSlice = createSlice({
     setHoveredRestaurant(state, action: PayloadAction<Restaurant | null>) {
       state.hoveredRestaurant = action.payload;
     },
+    resetFormStatus(state) {
+      state.formStatus = 'idle';
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -124,14 +132,17 @@ const restaurantsSlice = createSlice({
       .addCase(createRestaurant.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.formStatus = 'idle';
       })
       .addCase(createRestaurant.fulfilled, (state, action: PayloadAction<Restaurant>) => {
         state.loading = false;
         state.restaurants.push(action.payload);
+        state.formStatus = 'success';
       })
       .addCase(createRestaurant.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        state.formStatus = 'error';
       })
       .addCase(updateRestaurant.pending, (state) => {
         state.loading = true;
@@ -171,6 +182,6 @@ export {
   deleteRestaurant, 
 };
 
-export const { setHoveredRestaurant } = restaurantsSlice.actions;
+export const { setHoveredRestaurant, resetFormStatus } = restaurantsSlice.actions;
 
 export default restaurantsSlice.reducer;

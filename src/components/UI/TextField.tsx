@@ -6,11 +6,12 @@ interface TextFieldProps {
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
+  className?: string;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ label, placeholder = '', value, onChange }) => {
+const TextField: React.FC<TextFieldProps> = ({ label, placeholder = '', value, onChange, className = '' }) => {
   return (
-    <div className="flex flex-col mb-4">
+    <div className={`flex flex-col mb-4 ${className}`}>
       <label className="text-gray-700 mb-2 font-semibold">{label}</label>
       <textarea
         value={value}

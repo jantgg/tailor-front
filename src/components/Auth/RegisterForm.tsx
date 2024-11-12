@@ -91,7 +91,7 @@ const RegisterForm: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             name="email"
-            additionalClasses="text-white"
+            additionalClasses="text-white border-white"
           />
           {errors.email && (
             <ul className="text-red-500">
@@ -107,7 +107,7 @@ const RegisterForm: React.FC = () => {
             value={formData.username}
             onChange={handleChange}
             name="username"
-            additionalClasses="text-white"
+            additionalClasses="text-white border-white"
           />
           {errors.username && (
             <ul className="text-red-500">

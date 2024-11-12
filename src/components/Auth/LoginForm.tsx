@@ -54,7 +54,7 @@ const LoginForm: React.FC = () => {
         value={formData.username}
         onChange={handleChange}
         name="username"
-        additionalClasses="text-white"
+        additionalClasses="text-white border-white"
       />
       {errors.username && <p className="text-red-500">{errors.username}</p>}
 
@@ -64,7 +64,7 @@ const LoginForm: React.FC = () => {
         value={formData.password}
         onChange={handleChange}
         name="password"
-        additionalClasses="text-white"
+        additionalClasses="text-white border-white"
       />
       {errors.password && <p className="text-red-500">{errors.password}</p>}
 
