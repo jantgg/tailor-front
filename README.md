@@ -93,3 +93,9 @@ manejo de errores entre backy  front mas robusto
 mas fragmentacion en componentes en los formularios
 paginacion con api en los comentarios de los restaurantes
 json las validaciones en zod
+! El Spinner está dentro de los boton en login y register
+Subida de imagenes por api con cloudinary
+mostrar rating del restaurante real
+
+icono en el navegador
+nombre de Tailor en la pestaña

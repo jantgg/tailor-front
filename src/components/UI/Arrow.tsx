@@ -2,9 +2,11 @@ import React from "react";
 
 type ArrowProps = {
   direction: "right" | "left" | "up" | "down";
+  className?: string;
+  color?: string;
 };
 
-const Arrow: React.FC<ArrowProps> = ({ direction }) => {
+const Arrow: React.FC<ArrowProps> = ({ direction, className = "", color = "white" }) => {
   // Definimos la rotación según la dirección
   const getRotation = () => {
     switch (direction) {
@@ -22,7 +24,7 @@ const Arrow: React.FC<ArrowProps> = ({ direction }) => {
 
   return (
     <div
-      className={`flex items-center justify-center transition-transform duration-300 ease-in-out`}
+      className={`flex items-center justify-center transition-transform duration-300 ease-in-out ${className}`}
       style={{ transform: `rotate(${getRotation()}deg)` }}
     >
       {/* Flecha */}
@@ -35,19 +37,19 @@ const Arrow: React.FC<ArrowProps> = ({ direction }) => {
       >
         <path
           d="M11.165 21.0815L4.08337 13.9999L11.165 6.91821"
-          stroke="white"
-          stroke-width="1.5"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M23.9167 14L4.28175 14"
-          stroke="white"
-          stroke-width="1.5"
-          stroke-miterlimit="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeMiterlimit="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

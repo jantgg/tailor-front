@@ -72,7 +72,7 @@ const RegisterForm: React.FC = () => {
       setErrors({});
       const response = await dispatch(registerUser(formData)); 
       if (response.meta.requestStatus === 'fulfilled') {
-        router.push("/main");
+        router.push("/login");
       }
     } catch (error) {
       if (error instanceof z.ZodError) {

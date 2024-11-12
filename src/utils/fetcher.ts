@@ -17,6 +17,10 @@ const fetcher = async ({
   }
 
   const url = `${baseUrl}${endpoint}`;
+  
+  // Consola para verificar la URL y token
+  console.log("Request URL:", url);
+  console.log("Token:", token);
 
   const headers: HeadersInit = {
     "Content-Type": "application/json",
@@ -24,6 +28,7 @@ const fetcher = async ({
 
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
+    console.log("Authorization Header:", headers["Authorization"]); // Consola para verificar el encabezado
   }
 
   const options: RequestInit = {
@@ -39,15 +44,14 @@ const fetcher = async ({
     const response = await fetch(url, options);
     if (!response.ok) {
       const errorMessage = await response.text();
-      // En lugar de lanzar un error genérico, solo pasar el mensaje
       throw { status: response.status, message: errorMessage };
     }
     return await response.json();
   } catch (error) {
-    // Ahora capturamos el error con más detalle
     console.error("Fetch error:", error);
-    throw error; // Lanzamos el error sin envolverlo
+    throw error;
   }
 };
 
 export default fetcher;
+

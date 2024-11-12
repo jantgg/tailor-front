@@ -1,7 +1,7 @@
 // src/slices/reviewsSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { reviewRequest } from '../../api/reviewsAPI';
-import { Review } from '../../types/Review';
+import { Review, ReviewCreatePayload } from '../../types/Review';
 
 interface ReviewsState {
   reviews: Review[];
@@ -50,11 +50,11 @@ const fetchReview = createAsyncThunk(
 
 const createReview = createAsyncThunk(
   'reviews/createReview',
-  async ({ reviewData, token }: { reviewData: Omit<Review, 'id' | 'createdAt'>; token: string }, { rejectWithValue }) => {
+  async ({ reviewData, token }: { reviewData: ReviewCreatePayload; token: string }, { rejectWithValue }) => {
     try {
       const response = await reviewRequest({ 
         method: 'POST', 
-        data: reviewData, 
+        data: reviewData as Record<string, unknown>,
         token 
       });
       return response as Review;
@@ -64,6 +64,7 @@ const createReview = createAsyncThunk(
     }
   }
 );
+
 
 const updateReview = createAsyncThunk(
   'reviews/updateReview',

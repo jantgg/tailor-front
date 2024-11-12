@@ -8,6 +8,15 @@ export interface Review {
   rating: number;
   comments: string;
   createdAt: Date;
-  user: User;             // Usuario que dejó la reseña, referencia al tipo User
-  restaurant: Restaurant; // Restaurante al que pertenece la reseña, referencia al tipo Restaurant
+  user: User;
+  restaurant: Restaurant;
+}
+
+// Tipo para la creación de una reseña en el frontend (solo campos necesarios)
+export interface ReviewCreatePayload {
+  rating: number;
+  comments: string;
+  userId: string;
+  restaurantId: string;
+  [key: string]: unknown;
 }

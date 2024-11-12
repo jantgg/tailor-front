@@ -24,4 +24,5 @@ export interface Restaurant {
   updatedAt: Date;
   reviews: Review[];       // Datos completos de las reseñas
   favorites: Favorite[];   // Datos completos de los favoritos
+  averageRating: number;
 }

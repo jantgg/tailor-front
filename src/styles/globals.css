@@ -19,3 +19,13 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Ocultar la scrollbar en navegadores Webkit (Chrome, Safari) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ocultar la scrollbar en Firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+}

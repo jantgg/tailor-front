@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register, login } from '../../api/authAPI';
 import { User } from '../../types/Auth';
+import { saveToken, getToken, removeToken, saveUser, getUser, removeUser } from '../../utils/storageManager';
 
 interface AuthState {
   user: User | null;
@@ -10,10 +11,9 @@ interface AuthState {
   error: { message: string; status: number } | null;
 }
 
-
 const initialState: AuthState = {
-  user: null,
-  token: null,
+  user: getUser(), // Cargar el usuario desde localStorage si existe
+  token: getToken(), // Cargar el token desde localStorage si existe
   loading: false,
   error: null,
 };
@@ -40,7 +40,10 @@ export const loginUser = createAsyncThunk<{ user: User; token: string }, { usern
   async ({ username, password }, { rejectWithValue }) => {
     try {
       const response = await login(username, password);
-      return response;
+      return {
+        user: response.user,
+        token: response.token,
+      };
     } catch (error: unknown) {
       if (error instanceof Error) {
         return rejectWithValue({ message: error.message, status: 500 });
@@ -55,10 +58,22 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setTokenFromStorage: (state) => {
+      const token = getToken();
+      const user = getUser();
+      if (token) {
+        state.token = token;
+      }
+      if (user) {
+        state.user = user;
+      }
+    },
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.error = null;
+      removeToken(); // Eliminar el token de localStorage
+      removeUser(); // Eliminar el usuario de localStorage
     },
   },
   extraReducers: (builder) => {
@@ -71,13 +86,14 @@ const authSlice = createSlice({
         state.loading = false;
         const errorPayload = action.payload as { message: string; status: number };
         state.error = errorPayload || { message: 'Error en el registro', status: 500 };
-        console.log('Register failed with error:', action.payload);
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.error = null;
+        saveToken(action.payload.token); // Guardar el token en localStorage
+        saveUser(action.payload.user); // Guardar el usuario en localStorage
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -88,16 +104,17 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.error = null;
+        saveToken(action.payload.token); // Guardar el token en localStorage
+        saveUser(action.payload.user); // Guardar el usuario en localStorage
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         const errorPayload = action.payload as { message: string; status: number };
         state.error = errorPayload || { message: 'Error en el inicio de sesión', status: 500 };
-        console.log('Login failed with error:', action.payload);
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setTokenFromStorage } = authSlice.actions;
 
 export default authSlice.reducer;

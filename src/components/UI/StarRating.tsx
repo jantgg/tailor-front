@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useState } from "react";
 
 interface StarRatingProps {
   rating: number;
   maxRating?: number;
+  selectable?: boolean;
+  onChange?: (rating: number) => void;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ rating, maxRating = 5 }) => {
-  const filledStarSvg = (
-    <svg
-      width="24"
-      height="25"
-      viewBox="0 0 24 25"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 0.770996L12.5983 8.22662L15.1058 1.17989L13.7541 8.53631L18 2.37869L14.7903 9.13459L20.4853 4.28572L15.6364 9.98068L22.3923 6.771L16.2347 11.0169L23.5911 9.66517L16.5444 12.1727L24 12.771L16.5444 13.3693L23.5911 15.8768L16.2347 14.5251L22.3923 18.771L15.6364 15.5613L20.4853 21.2563L14.7903 16.4074L18 23.1633L13.7541 17.0057L15.1058 24.3621L12.5983 17.3154L12 24.771L11.4017 17.3154L8.89417 24.3621L10.2459 17.0057L6 23.1633L9.20969 16.4074L3.51472 21.2563L8.36359 15.5613L1.6077 18.771L7.76531 14.5251L0.40889 15.8768L7.45562 13.3693L0 12.771L7.45562 12.1727L0.40889 9.66517L7.76531 11.0169L1.6077 6.771L8.36359 9.98068L3.51472 4.28572L9.20969 9.13459L6 2.37869L10.2459 8.53631L8.89417 1.17989L11.4017 8.22662L12 0.770996Z"
-        fill="#264BEB"
-      />
-    </svg>
-  );
+const StarRating: React.FC<StarRatingProps> = ({
+  rating,
+  maxRating = 5,
+  selectable = false,
+  onChange,
+}) => {
+  const [currentRating, setCurrentRating] = useState(rating);
+
+  const handleClick = (index: number) => {
+    if (selectable && onChange) {
+      setCurrentRating(index + 1);
+      onChange(index + 1);
+    }
+  };
 
   const emptyStarSvg = (
     <svg
@@ -36,11 +37,30 @@ const StarRating: React.FC<StarRatingProps> = ({ rating, maxRating = 5 }) => {
     </svg>
   );
 
+  const filledStarSvg = (
+    <svg
+      width="24"
+      height="25"
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 0.770996L12.5983 8.22662L15.1058 1.17989L13.7541 8.53631L18 2.37869L14.7903 9.13459L20.4853 4.28572L15.6364 9.98068L22.3923 6.771L16.2347 11.0169L23.5911 9.66517L16.5444 12.1727L24 12.771L16.5444 13.3693L23.5911 15.8768L16.2347 14.5251L22.3923 18.771L15.6364 15.5613L20.4853 21.2563L14.7903 16.4074L18 23.1633L13.7541 17.0057L15.1058 24.3621L12.5983 17.3154L12 24.771L11.4017 17.3154L8.89417 24.3621L10.2459 17.0057L6 23.1633L9.20969 16.4074L3.51472 21.2563L8.36359 15.5613L1.6077 18.771L7.76531 14.5251L0.40889 15.8768L7.45562 13.3693L0 12.771L7.45562 12.1727L0.40889 9.66517L7.76531 11.0169L1.6077 6.771L8.36359 9.98068L3.51472 4.28572L9.20969 9.13459L6 2.37869L10.2459 8.53631L8.89417 1.17989L11.4017 8.22662L12 0.770996Z"
+        fill="#264BEB"
+      />
+    </svg>
+  );
+
   return (
     <div className="flex space-x-1">
       {[...Array(maxRating)].map((_, index) => (
-        <div key={index}>
-          {index < rating ? filledStarSvg : emptyStarSvg}
+        <div
+          key={index}
+          onClick={() => handleClick(index)}
+          className={selectable ? "cursor-pointer" : ""}
+        >
+          {index < currentRating ? filledStarSvg : emptyStarSvg}
         </div>
       ))}
     </div>

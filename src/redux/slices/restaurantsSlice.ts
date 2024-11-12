@@ -3,10 +3,10 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { restaurantRequest } from '../../api/restaurantsAPI';
 import { Restaurant } from '../../types/Restaurant';
 
-// Definimos la estructura del estado
 interface RestaurantsState {
   restaurants: Restaurant[];
   singleRestaurant: Restaurant | null;
+  hoveredRestaurant: Restaurant | null;
   loading: boolean;
   error: string | null;
 }
@@ -14,6 +14,7 @@ interface RestaurantsState {
 const initialState: RestaurantsState = {
   restaurants: [],
   singleRestaurant: null,
+  hoveredRestaurant: null,
   loading: false,
   error: null,
 };
@@ -88,7 +89,11 @@ const deleteRestaurant = createAsyncThunk(
 const restaurantsSlice = createSlice({
   name: 'restaurants',
   initialState,
-  reducers: {},
+  reducers: {
+    setHoveredRestaurant(state, action: PayloadAction<Restaurant | null>) {
+      state.hoveredRestaurant = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchRestaurants.pending, (state) => {
@@ -158,5 +163,14 @@ const restaurantsSlice = createSlice({
   },
 });
 
-export { fetchRestaurants, fetchRestaurant, createRestaurant, updateRestaurant, deleteRestaurant };
+export { 
+  fetchRestaurants, 
+  fetchRestaurant, 
+  createRestaurant, 
+  updateRestaurant, 
+  deleteRestaurant, 
+};
+
+export const { setHoveredRestaurant } = restaurantsSlice.actions;
+
 export default restaurantsSlice.reducer;

@@ -1,3 +1,4 @@
+// src/components/UI/Spinner.tsx
 import React from 'react';
 
 interface SpinnerProps {
