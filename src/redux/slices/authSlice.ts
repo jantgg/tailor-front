@@ -93,7 +93,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.error = null;
         saveToken(action.payload.token); // Guardar el token en localStorage
-        saveUser(action.payload.user); // Guardar el usuario en localStorage
+        saveUser(action.payload.user); // Guardar el user en localStorage
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -105,7 +105,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.error = null;
         saveToken(action.payload.token); // Guardar el token en localStorage
-        saveUser(action.payload.user); // Guardar el usuario en localStorage
+        saveUser(action.payload.user); // Guardar el user en localStorage
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

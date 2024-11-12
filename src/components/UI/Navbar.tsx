@@ -1,15 +1,15 @@
 // src/components/UI/Navbar.tsx
-import { FC, useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router'; 
-import Arrow from './Arrow';
-import Button from './Button';
-import LogoName from './LogoName';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store'; 
-import { logout } from '../../redux/slices/authSlice';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { FC, useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Arrow from "./Arrow";
+import Button from "./Button";
+import LogoName from "./LogoName";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { logout } from "../../redux/slices/authSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Navbar: FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -29,9 +29,9 @@ const Navbar: FC = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    router.push('/');
+    router.push("/");
     setDropdownOpen(false); // Cerrar el dropdown después de cerrar sesión
-    console.log('Cerrando sesión y redirigiendo a la raíz...');
+    console.log("Cerrando sesión y redirigiendo a la raíz...");
   };
 
   const closeDropdown = () => {
@@ -42,15 +42,23 @@ const Navbar: FC = () => {
 
   return (
     <nav className="fixed z-30 w-full p-4 px-6 flex justify-between items-center">
-     
       {/* Logo o Nombre de la Aplicación */}
-      <LogoName />
+      <Link href="/main">
+        <LogoName />
+      </Link>
 
       {/* Menú de Usuario */}
       <div className="relative">
-        <div className="flex items-center space-x-2 cursor-pointer" onClick={toggleDropdown}>
+        <div
+          className="flex items-center space-x-2 cursor-pointer"
+          onClick={toggleDropdown}
+        >
           <span className="text-xl capitalize">{user?.username}</span>
-          <Arrow direction={dropdownOpen ? 'down' : 'up'} color="black" className='h-5 w-5'/>
+          <Arrow
+            direction={dropdownOpen ? "down" : "up"}
+            color="black"
+            className="h-5 w-5"
+          />
         </div>
 
         {/* Dropdown Menu */}
@@ -69,9 +77,9 @@ const Navbar: FC = () => {
               </li>
               <hr className="my-2 border-gray-300" />
               <li className="py-1 px-2 flex justify-center">
-                <Button 
-                  text="Cerrar sesión" 
-                  onClick={handleLogout} 
+                <Button
+                  text="Cerrar sesión"
+                  onClick={handleLogout}
                   additionalClasses="border-white text-white hover:bg-white hover:text-tailor-blue rounded-xl"
                 />
               </li>

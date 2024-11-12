@@ -1,101 +1,217 @@
+# Instalación
+## Para lanzar el frontend en local
 ```
-my-next-app/
+npm install
+npm run dev
+```
+## Configuraciones necesarias
+### Crear .env en la raíz
+```
+NEXT_PUBLIC_API_URL="http://localhost:3000/api"
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSyCE9lkuUsULKhPHII55eICk6WSEzaCKqXM"
+```
+# Estrutura de carpetas
+
+```plaintext
+frontend/
+│
+├── node_modules/
 ├── public/
-│   ├── images/                            # Carpeta que contiene las imágenes utilizadas en la aplicación.
-│   │   ├── logo.png                       # Logo de la aplicación.
-│   │   ├── sample-restaurant.jpg          # Imagen de ejemplo para los restaurantes.
-│   │   ├── home-background.jpg            # Imagen de fondo para la página de inicio.
-│   │   ├── signin-background.jpg          # Imagen de fondo para la página de registro.
-│   │   ├── login-background.jpg           # Imagen de fondo para la página de inicio de sesión.
-│   │   └── map-placeholder.jpg            # Imagen placeholder mientras el mapa se está cargando.
+│   ├── images/
+│   └── svgs/
+│
 ├── src/
-│   ├── api/                               # Carpeta que contiene las interacciones con la API.
-│   │   ├── restaurantAPI.ts               # Funciones para realizar operaciones CRUD sobre restaurantes.
-│   │   ├── commentAPI.ts                  # Funciones para realizar operaciones CRUD sobre comentarios.
-│   │   └── authAPI.ts                     # Funciones para el registro, inicio de sesión y autenticación de usuarios.
-│   ├── components/                        # Componentes reutilizables de la aplicación.
-│   │   ├── Comments/                      # Componentes relacionados con la funcionalidad de comentarios.
-│   │   │   ├── CommentForm.tsx            # Formulario para añadir un comentario a un restaurante.
-│   │   │   ├── CommentList.tsx            # Lista de todos los comentarios de un restaurante.
-│   │   │   └── CommentItem.tsx            # Representación individual de un comentario (nombre, calificación, texto).
-│   │   ├── Map/                           # Componentes relacionados con el mapa de restaurantes.
-│   │   │   ├── RestaurantMap.tsx          # Componente que renderiza el mapa con ubicaciones de restaurantes usando Google Maps API.
-│   │   │   └── Marker.tsx                 # Componente marcador (opcional) para representar un restaurante en el mapa.
-│   │   ├── RestaurantForm/                # Componentes para el formulario de creación de restaurante.
-│   │   │   ├── StepOne.tsx                # Primer paso del formulario de creación de restaurante.
-│   │   │   ├── StepTwo.tsx                # Segundo paso del formulario, que permite subir una imagen.
-│   │   │   ├── StepThree.tsx              # Confirmación del restaurante creado exitosamente.
-│   │   │   ├── StepError.tsx              # Vista de error en caso de que falle la creación del restaurante.
-│   │   │   ├── ImageUploader.tsx          # Componente que permite subir una imagen a Cloudinary.
-│   │   │   └── MultiStepForm.tsx          # Componente que controla el flujo de pasos del formulario de creación.
-│   │   ├── RestaurantDetail/              # Componentes que componen la vista de detalles del restaurante.
-│   │   │   ├── RestaurantHeader.tsx       # Componente que muestra el nombre, imagen y dirección del restaurante.
-│   │   │   ├── RestaurantDescription.tsx  # Componente para mostrar la descripción detallada del restaurante.
-│   │   │   └── RestaurantComments.tsx     # Sección para mostrar los comentarios y el formulario para añadir comentarios.
-│   │   ├── RestaurantList/                # Componentes para mostrar la lista de restaurantes.
-│   │   │   ├── RestaurantListItem.tsx     # Componente que representa un restaurante dentro de la lista.
-│   │   │   ├── RestaurantList.tsx         # Lista que contiene varios `RestaurantListItem` y organiza la vista.
-│   │   ├── User/                          # Componentes relacionados con el perfil del usuario.
-│   │   │   ├── UserMenu.tsx               # Menú desplegable para acceder a las opciones del usuario (cerrar sesión, etc.).
-│   │   │   └── UserAvatar.tsx             # Avatar del usuario, que al hacer clic despliega el menú (`UserMenu`).
-│   │   ├── UI/                            # Componentes reutilizables de la interfaz de usuario.
-│   │   │   ├── Button.tsx                 # Componente de botón reutilizable para diferentes acciones.
-│   │   │   ├── InputField.tsx             # Componente de campo de entrada reutilizable.
-│   │   │   ├── DropdownMenu.tsx           # Componente reutilizable para crear menús desplegables.
-│   │   │   ├── StarRating.tsx             # Componente para mostrar y capturar la calificación en forma de estrellas.
-│   │   │   └── ProgressIndicator.tsx      # Indicador de progreso para mostrar el avance en formularios de varios pasos.
-│   ├── hooks/                             # Hooks personalizados utilizados en la aplicación.
-│   │   ├── useRestaurants.ts              # Hook para manejar las llamadas a la API relacionadas con restaurantes.
-│   │   ├── useComments.ts                 # Hook para manejar las llamadas a la API relacionadas con comentarios.
-│   │   ├── useAuth.ts                     # Hook para manejar la autenticación y el estado del usuario.
-│   │   ├── useCloudinary.ts               # Hook para integrar la subida de imágenes con Cloudinary.
-│   │   └── useMultiStepForm.ts            # Hook para manejar el estado de los pasos en formularios multi-pasos.
-│   ├── pages/                             # Páginas del proyecto, según la estructura de Next.js.
-│   │   ├── index.tsx                      # Página principal, representa la vista de bienvenida.
-│   │   ├── register.tsx                   # Página de registro para nuevos usuarios.
-│   │   ├── login.tsx                      # Página de inicio de sesión para usuarios existentes.
-│   │   ├── main.tsx                       # Página principal después del login, que muestra el mapa y la lista de restaurantes.
+│   ├── api/
+│   │   ├── authAPI.ts
+│   │   ├── restaurantsAPI.ts
+│   │   └── reviewsAPI.ts
+│   │
+│   ├── components/
+│   │   ├── Auth/
+│   │   │   ├── AuthCard.tsx
+│   │   │   ├── LoginForm.tsx
+│   │   │   ├── RegisterCard.tsx
+│   │   │   └── RegisterForm.tsx
+│   │   │
+│   │   ├── Home/
+│   │   │   ├── Landing/
+│   │   │   │   ├── HeroImage.tsx
+│   │   │   │   ├── WelcomeCard.tsx
+│   │   │   └── Loader.tsx
+│   │   │
+│   │   ├── Main/
+│   │   │   ├── RestaurantList.tsx
+│   │   │   └── RestaurantListItem.tsx
+│   │   │
+│   │   ├── Map/
+│   │   │   └── RestaurantMap.tsx
+│   │   │
+│   │   ├── RestaurantForm/
+│   │   │   ├── ImageUploader.tsx
+│   │   │   ├── RestaurantError.tsx
+│   │   │   └── RestaurantSuccess.tsx
+│   │   │
+│   │   ├── Reviews/
+│   │   │   ├── PostReview.tsx
+│   │   │   ├── ReviewItem.tsx
+│   │   │   └── ReviewList.tsx
+│   │   │
+│   │   └── UI/
+│   │       ├── Arrow.tsx
+│   │       ├── Button.tsx
+│   │       ├── Input.tsx
+│   │       ├── InputPassword.tsx
+│   │       ├── Logo.tsx
+│   │       ├── LogoName.tsx
+│   │       ├── Navbar.tsx
+│   │       ├── Spinner.tsx
+│   │       ├── StarRating.tsx
+│   │       ├── TextArea.tsx
+│   │       └── TextField.tsx
+│   │
+│   ├── layouts/
+│   │   ├── CreateRestaurant.tsx
+│   │   ├── Double.tsx
+│   │   ├── GeneralPadding.tsx
+│   │   ├── MainLayout.tsx
+│   │   └── MainPadding.tsx
+│   │
+│   ├── pages/
 │   │   ├── restaurants/
-│   │   │   ├── [id].tsx                   # Página de detalles de un restaurante específico, que renderiza `RestaurantDetail`.
-
-│   │   │   ├── create.tsx                 # Página para crear un nuevo restaurante (formulario multi-pasos).
-│   │   │   └── edit/[id].tsx              # Página para editar un restaurante específico.
-│   ├── redux/                             # Carpeta para el manejo del estado global con Redux.
-│   │   ├── store.ts                       # Configuración del Redux store y combinación de todos los reducers.
-│   │   ├── slices/                        # Slices de Redux para manejar el estado global.
-│   │   │   ├── restaurantSlice.ts         # Slice para manejar el estado de los restaurantes (lista, detalle, etc.).
-│   │   │   ├── commentSlice.ts            # Slice para manejar el estado de los comentarios (lista, estado de carga, etc.).
-│   │   │   └── authSlice.ts               # Slice para manejar el estado de autenticación (usuario, token, etc.).
-│   ├── styles/                            # Archivos CSS para definir los estilos de la aplicación.
-│   │   ├── globals.css                    # Estilos globales aplicables a toda la aplicación.
-│   │   ├── home.css                       # Estilos específicos para la página de inicio (home).
-│   │   ├── auth.css                       # Estilos específicos para las páginas de registro y login.
-│   │   ├── login.css                      # Estilos específicos para la página de login.
-│   │   ├── main.css                       # Estilos para la página principal con el mapa y lista de restaurantes.
-│   │   └── restaurantDetail.css           # Estilos para la vista de detalles del restaurante.
-│   ├── types/                             # Definiciones de tipos de TypeScript.
-│   │   ├── Restaurant.ts                  # Definiciones de tipo para los restaurantes (nombre, descripción, etc.).
-│   │   ├── Comment.ts                     # Definiciones de tipo para los comentarios (autor, contenido, calificación).
-│   │   └── Auth.ts                        # Definiciones de tipo para la autenticación (usuario, tokens, credenciales).
-│   ├── utils/                             # Utilidades y funciones auxiliares.
-│   │   ├── fetcher.ts                     # Función reutilizable para realizar peticiones a la API.
-│   │   ├── formatDate.ts                  # Función para formatear fechas (e.g., en los comentarios).
-│   │   └── validators.ts                  # Funciones de validación (validar email, contraseñas, etc.).
-│   ├── App.tsx                            # Componente principal de la aplicación (envuelve el provider de Redux).
-├── tailwind.config.js                     # Configuración para Tailwind CSS.
-├── tsconfig.json                          # Configuración de TypeScript.
-├── .env.local                             # Variables de entorno para la API Key de Google Maps y Cloudinary.
-└── README.md                              # Instrucciones sobre cómo instalar, configurar y ejecutar la aplicación.
+│   │   │   ├── [id].tsx
+│   │   │   ├── create.tsx
+│   │   │   └── index.tsx
+│   │   │
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   ├── login.tsx
+│   │   ├── main.tsx
+│   │   └── register.tsx
+│   │
+│   ├── redux/
+│   │   ├── slices/
+│   │   │   ├── authSlice.ts
+│   │   │   ├── restaurantsSlice.ts
+│   │   │   └── reviewsSlice.ts
+│   │   │
+│   │   ├── store.ts
+│   │   └── redux-docs.md
+│   │
+│   ├── styles/
+│   │   ├── globals.css
+│   │   └── mapStyle.ts
+│   │
+│   ├── types/
+│   │   ├── Auth.ts
+│   │   ├── Favorite.ts
+│   │   ├── Restaurant.ts
+│   │   └── Review.ts
+│   │
+│   └── utils/
+│       ├── fetcher.ts
+│       └── storageManager.ts
+│
+├── .env
+├── .eslintrc.json
+├── .gitignore
+├── next-env.d.ts
+├── next.config.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── README.md
+├── redux-docs.md 
+├── tailwind.config.ts
+└── tsconfig.json
 ```
 
-A mejorar:
-manejo de errores entre backy  front mas robusto
-mas fragmentacion en componentes en los formularios
-paginacion con api en los comentarios de los restaurantes
-json las validaciones en zod
-! El Spinner está dentro de los boton en login y register
-Subida de imagenes por api con cloudinary
-mostrar rating del restaurante real
+---
 
-icono en el navegador
-nombre de Tailor en la pestaña
+## Descripción de Archivos
+
+- **node_modules**: Contiene todas las dependencias y librerías instaladas para el proyecto, gestionadas por Node.js.
+- **public**: Carpeta de archivos estáticos accesibles públicamente.
+  - **images**: Carpeta para almacenar imágenes estáticas.
+  - **svgs**: Carpeta para íconos o gráficos vectoriales SVG.
+
+#### Carpeta `src`
+
+- **api**: Aquí se definen las llamadas a la API.
+  - **authAPI.ts**: Maneja las solicitudes relacionadas con la autenticación.
+  - **restaurantsAPI.ts**: Realiza peticiones relacionadas con los datos de restaurantes.
+  - **reviewsAPI.ts**: Encargado de las interacciones con las reseñas de los restaurantes.
+
+- **components**: Componentes reutilizables, divididos en subcarpetas por función.
+  - **Auth**: Componentes para la autenticación.
+    - **AuthCard.tsx**: Tarjeta de inicio de sesión.
+    - **LoginForm.tsx** y **RegisterForm.tsx**: Formularios de inicio de sesión y registro.
+    - **RegisterCard.tsx**: Tarjeta de registro.
+  - **Home**: Componentes de la página de inicio.
+    - **HeroImage.tsx**: Imagen principal de bienvenida.
+    - **WelcomeCard.tsx**: Tarjeta de bienvenida.
+    - **Loader.tsx**: Indicador de carga para la página.
+  - **Main**: Lista de restaurantes.
+    - **RestaurantList.tsx**: Lista completa de restaurantes.
+    - **RestaurantListItem.tsx**: Item individual de la lista de restaurantes.
+  - **Map**: Componentes para mostrar mapas.
+    - **RestaurantMap.tsx**: Muestra un mapa con ubicaciones de restaurantes.
+  - **RestaurantForm**: Componentes para el formulario de restaurantes.
+    - **ImageUploader.tsx**: Permite subir imágenes.
+    - **RestaurantError.tsx** y **RestaurantSuccess.tsx**: Mensajes de éxito y error.
+  - **Reviews**: Gestión de reseñas de restaurantes.
+    - **PostReview.tsx**: Formulario para publicar una reseña.
+    - **ReviewItem.tsx** y **ReviewList.tsx**: Visualización de reseñas.
+  - **UI**: Componentes genéricos y de interfaz de usuario.
+    - Incluye elementos como **Button.tsx**, **Input.tsx**, **Logo.tsx**, **Spinner.tsx**, etc., para interfaces comunes.
+
+- **layouts**: Componentes para estructurar la disposición visual.
+  - Ejemplos: **MainLayout.tsx** para la estructura general de la página y **CreateRestaurant.tsx** para la vista de creación de restaurantes.
+
+- **pages**: Define rutas y vistas de la aplicación con Next.js.
+  - **restaurants**: Subcarpeta para rutas de restaurantes, incluyendo rutas dinámicas (`[id].tsx`).
+  - **login.tsx** y **register.tsx**: Vistas para inicio de sesión y registro.
+
+- **redux**: Configuración de Redux para el manejo de estado global.
+  - **slices**: Divide el estado en secciones (`authSlice.ts`, `restaurantsSlice.ts`, `reviewsSlice.ts`).
+  - **store.ts**: Configuración del almacenamiento global de Redux.
+
+- **styles**: Contiene estilos globales y personalizados.
+  - **globals.css**: Estilos CSS globales de la aplicación.
+  - **mapStyle.ts**: Estilos específicos para el mapa.
+
+- **types**: Tipos TypeScript para asegurar el tipo de datos de cada entidad principal.
+  - Ejemplos: **Auth.ts**, **Favorite.ts**, **Restaurant.ts**, **Review.ts**.
+
+- **utils**: Funciones utilitarias y helpers.
+  - **fetcher.ts**: Función de ayuda para realizar peticiones a la API.
+  - **storageManager.ts**: Gestión de almacenamiento local.
+
+#### Archivos de configuración y documentación
+
+- **.env**: Variables de entorno para configuración sensible.
+- **.eslintrc.json** y **tsconfig.json**: Configuración de ESLint y TypeScript para mantener el código consistente y tipado.
+- **next.config.ts**: Configuración de Next.js.
+- **tailwind.config.ts**: Configuración de Tailwind CSS.
+- **README.md**: Documentación general del proyecto.
+- **redux-docs.md**: Guía para configurar y utilizar Redux.
+
+---
+
+### Resumen General
+
+Este proyecto es una aplicación web desarrollada en Next.js con una arquitectura modular. Se organiza en componentes reutilizables, con un sistema de autenticación y funcionalidad de reseñas para restaurantes. Usa Redux para el manejo de estado global y está tipado con TypeScript para mayor fiabilidad. La estructura se enfoca en separar lógica y diseño visual, con carpetas específicas para la API, componentes, estilos y utilidades.
+
+---
+
+### A mejorar
+
+- **Manejo de errores**: Implementar un manejo de errores más robusto y consistente entre el backend y el frontend, asegurando que los mensajes de error se muestren de forma clara para mejorar la experiencia del usuario.
+  
+- **Fragmentación en componentes de formularios**: Modularizar más los formularios, separando las validaciones en esquemas JSON usando Zod para mejorar la mantenibilidad y consistencia en la validación de datos.
+
+- **Paginación en comentarios**: Implementar una paginación en la API para gestionar eficientemente los comentarios de restaurantes y optimizar la carga de datos en vistas con muchos comentarios.
+
+- **Subida de imágenes**: Configurar la subida de imágenes a través de API utilizando Cloudinary para optimizar la gestión de archivos e integrar el almacenamiento de imágenes de manera más eficiente en la plataforma.
+
+---
+

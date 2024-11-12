@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchRestaurant } from "../../redux/slices/restaurantsSlice";
 import Spinner from "../../components/UI/Spinner";
-import ReviewList from "../../components/RestaurantDetail/ReviewList";
-import PostReview from "../../components/RestaurantDetail/PostReview";
+import ReviewList from "../../components/Reviews/ReviewList";
+import PostReview from "../../components/Reviews/PostReview";
 import GeneralPadding from "../../layouts/GeneralPadding";
 
 const RestaurantDetail = () => {
