@@ -10,3 +10,11 @@ export interface User {
   favorites: Favorite[];
   reviews: Review[];
 }
+
+
+export interface AuthState {
+  user: User | null;
+  token: string | null;
+  loading: boolean;
+  error: { message: string; status: number } | null;
+}

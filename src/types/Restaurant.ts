@@ -27,6 +27,7 @@ export interface Restaurant {
   averageRating: number;
 }
 
+// Para el formulario de envio de datos
 export interface RestaurantData extends Record<string, unknown> {
   name: string;
   address: string;

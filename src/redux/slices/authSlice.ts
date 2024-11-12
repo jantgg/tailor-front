@@ -1,15 +1,8 @@
 // src/slices/authSlice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register, login } from '../../api/authAPI';
-import { User } from '../../types/Auth';
+import { User, AuthState } from '../../types/Auth';
 import { saveToken, getToken, removeToken, saveUser, getUser, removeUser } from '../../utils/storageManager';
-
-interface AuthState {
-  user: User | null;
-  token: string | null;
-  loading: boolean;
-  error: { message: string; status: number } | null;
-}
 
 const initialState: AuthState = {
   user: getUser(), // Cargar el usuario desde localStorage si existe
