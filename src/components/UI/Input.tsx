@@ -15,7 +15,7 @@ const Input: React.FC<InputProps> = ({ label, placeholder = '', value, onChange,
   const classes = `${baseClasses} ${additionalClasses}`;
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2 max-w-[600px]">
       <label className="text-3xl">{label}</label>
       <input
         type="text"

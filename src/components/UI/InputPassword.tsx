@@ -21,7 +21,7 @@ const InputPassword: React.FC<InputPasswordProps> = ({ label, placeholder = '', 
   const classes = `${baseClasses} ${additionalClasses}`;
 
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="relative flex flex-col space-y-2 max-w-[600px]">
       <label className="text-white">{label}</label>
       <div className="relative">
         <input
